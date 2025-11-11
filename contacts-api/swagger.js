@@ -6,8 +6,8 @@ const doc = {
     title: 'Contacts API',
     description: 'Contacts API for CSE341'
   },
-  host: process.env.SWAGGER_HOST || 'localhost:8080', // override when deployed
-  schemes: ['http'],
+  host: process.env.SWAGGER_HOST || 'localhost:8080', // will be set by Render
+  schemes: process.env.NODE_ENV === 'production' ? ['https'] : ['http'],
   tags: [
     {
       name: 'Contacts',
