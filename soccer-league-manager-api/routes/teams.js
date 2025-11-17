@@ -39,13 +39,11 @@ router.get('/:id', async (req, res) => {
 
 // POST create team
 router.post('/', validateTeam, async (req, res) => {
-  /* #swagger.requestBody = {
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Team data',
     required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: "#/definitions/Team" }
-      }
-    }
+    schema: { $ref: '#/definitions/Team' }
   } */
   try {
     const db = await connectDB();
@@ -59,13 +57,11 @@ router.post('/', validateTeam, async (req, res) => {
 
 // PUT update team
 router.put('/:id', validateTeam, async (req, res) => {
-  /* #swagger.requestBody = {
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Team data',
     required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: "#/definitions/Team" }
-      }
-    }
+    schema: { $ref: '#/definitions/Team' }
   } */
   try {
     const db = await connectDB();

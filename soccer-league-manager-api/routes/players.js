@@ -39,13 +39,11 @@ router.get('/:id', async (req, res) => {
 
 // POST create player
 router.post('/', validatePlayer, async (req, res) => {
-  /* #swagger.requestBody = {
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Player data',
     required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: "#/definitions/Player" }
-      }
-    }
+    schema: { $ref: '#/definitions/Player' }
   } */
   try {
     const db = await connectDB();
@@ -59,13 +57,11 @@ router.post('/', validatePlayer, async (req, res) => {
 
 // PUT update player
 router.put('/:id', validatePlayer, async (req, res) => {
-  /* #swagger.requestBody = {
+  /* #swagger.parameters['body'] = {
+    in: 'body',
+    description: 'Player data',
     required: true,
-    content: {
-      "application/json": {
-        schema: { $ref: "#/definitions/Player" }
-      }
-    }
+    schema: { $ref: '#/definitions/Player' }
   } */
   try {
     const db = await connectDB();

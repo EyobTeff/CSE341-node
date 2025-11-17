@@ -26,6 +26,17 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Player data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -35,16 +46,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Player"
-              }
-            }
           }
         }
       }
@@ -80,6 +81,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Player data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
           }
         ],
         "responses": {
@@ -94,16 +104,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Player"
-              }
-            }
           }
         }
       },
@@ -144,6 +144,17 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Match data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Match"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -153,16 +164,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Match"
-              }
-            }
           }
         }
       }
@@ -198,6 +199,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Match data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Match"
+            }
           }
         ],
         "responses": {
@@ -212,16 +222,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Match"
-              }
-            }
           }
         }
       },
@@ -262,6 +262,17 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Team data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Team"
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -271,16 +282,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Team"
-              }
-            }
           }
         }
       }
@@ -316,6 +317,15 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Team data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Team"
+            }
           }
         ],
         "responses": {
@@ -330,16 +340,6 @@
           },
           "500": {
             "description": "Internal Server Error"
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/definitions/Team"
-              }
-            }
           }
         }
       },
