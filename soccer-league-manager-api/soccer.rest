@@ -1,0 +1,98 @@
+### Get all players
+GET http://localhost:8080/players
+
+### Create player
+POST http://localhost:8080/players
+Content-Type: application/json
+
+{
+  "name": "Alex Abebe",
+  "team": "St. George",
+  "position": "Forward",
+  "age": 25,
+  "nationality": "Ethiopia"
+}
+
+### Update player (replace id)
+PUT http://localhost:8080/players/PUT_REAL_PLAYER_ID_HERE
+Content-Type: application/json
+
+{
+  "name": "Alex Abebe",
+  "team": "Fasil Kenema",
+  "position": "Forward",
+  "age": 26,
+  "nationality": "Ethiopia"
+}
+
+### Delete player (replace id)
+DELETE http://localhost:8080/players/PUT_REAL_PLAYER_ID_HERE
+
+
+
+### ---------------------------------------------
+### TEAMS ROUTES
+### ---------------------------------------------
+
+### Get all teams
+GET http://localhost:8080/teams
+
+### Create team
+POST http://localhost:8080/teams
+Content-Type: application/json
+
+{
+  "name": "St. George",
+  "city": "Addis Ababa",
+  "wins": 0,
+  "draws": 0,
+  "losses": 0,
+  "yellowCards": 0,
+  "redCards": 0
+}
+
+### Update team (replace id)
+PUT http://localhost:8080/teams/PUT_REAL_TEAM_ID_HERE
+Content-Type: application/json
+
+{
+  "name": "St. George",
+  "city": "Addis Ababa",
+  "wins": 10,
+  "draws": 3,
+  "losses": 2,
+  "yellowCards": 15,
+  "redCards": 2
+}
+
+### Delete team (replace id)
+DELETE http://localhost:8080/teams/PUT_REAL_TEAM_ID_HERE
+
+
+
+### ---------------------------------------------
+### MATCHES ROUTES
+### ---------------------------------------------
+
+### Get all matches
+GET http://localhost:8080/matches
+
+
+### Create match
+POST http://localhost:8080/matches
+Content-Type: application/json
+
+{
+  "homeTeam": "St. George",
+  "awayTeam": "Fasil Kenema",
+  "homeScore": 2,
+  "awayScore": 1,
+  "matchDate": "2025-11-10T14:30:00.000Z",
+
+  "playersWithYellowCards": [
+    { "playerId": "PUT_PLAYER_ID", "name": "Alex Abebe" }
+  ],
+  "playersWithRedCards": [
+    { "playerId": "PUT_PLAYER_ID", "name": "John Tesfaye" }
+  ]
+}

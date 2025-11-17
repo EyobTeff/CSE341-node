@@ -1,0 +1,78 @@
+### Base URL
+@baseUrl = http://localhost:3000
+
+### Get all players
+GET {{baseUrl}}/players
+
+### Get player by ID
+GET {{baseUrl}}/players/YOUR_PLAYER_ID_HERE
+
+### Create a new player
+POST {{baseUrl}}/players
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "position": "Forward",
+  "jerseyNumber": 10,
+  "team": "Team A",
+  "age": 25,
+  "nationality": "USA"
+}
+
+### Update a player
+PUT {{baseUrl}}/players/YOUR_PLAYER_ID_HERE
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "position": "Midfielder",
+  "jerseyNumber": 10,
+  "team": "Team A",
+  "age": 26,
+  "nationality": "USA"
+}
+
+### Delete a player
+DELETE {{baseUrl}}/players/YOUR_PLAYER_ID_HERE
+
+###
+### MATCHES ENDPOINTS
+###
+
+### Get all matches
+GET {{baseUrl}}/matches
+
+### Get match by ID
+GET {{baseUrl}}/matches/YOUR_MATCH_ID_HERE
+
+### Create a new match
+POST {{baseUrl}}/matches
+Content-Type: application/json
+
+{
+  "homeTeam": "Team A",
+  "awayTeam": "Team B",
+  "date": "2024-01-15",
+  "venue": "Stadium Name",
+  "homeScore": 0,
+  "awayScore": 0,
+  "status": "scheduled"
+}
+
+### Update a match
+PUT {{baseUrl}}/matches/YOUR_MATCH_ID_HERE
+Content-Type: application/json
+
+{
+  "homeTeam": "Team A",
+  "awayTeam": "Team B",
+  "date": "2024-01-15",
+  "venue": "Stadium Name",
+  "homeScore": 2,
+  "awayScore": 1,
+  "status": "completed"
+}
+
+### Delete a match
+DELETE {{baseUrl}}/matches/YOUR_MATCH_ID_HERE
