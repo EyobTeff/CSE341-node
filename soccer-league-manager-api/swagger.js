@@ -6,7 +6,7 @@ const doc = {
     description: 'API for players and matches with discipline rules'
   },
   host: process.env.SWAGGER_HOST || 'localhost:8080',
-  schemes: ['http', 'https'],
+  schemes: ['https', 'http'],
   definitions: {
     Player: {
       name: 'Alex Abebe',
