@@ -13,10 +13,15 @@ app.use('/teams', require('./routes/teams'));
 
 // Swagger UI
 const swaggerUi = require('swagger-ui-express');
-let swaggerFile;
+const fs = require('fs');
 try {
-  swaggerFile = require('./swagger.json');
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+  // Read swagger.json fresh each time to avoid caching issues
+  const swaggerFile = JSON.parse(fs.readFileSync('./swagger.json', 'utf8'));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, { 
+    swaggerOptions: { 
+      tryItOutEnabled: true 
+    } 
+  }));
 } catch (e) {
   console.warn('swagger.json not found. Run `npm run swagger` to generate it.');
 }
