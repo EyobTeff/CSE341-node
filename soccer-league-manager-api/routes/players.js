@@ -39,6 +39,14 @@ router.get('/:id', async (req, res) => {
 
 // POST create player
 router.post('/', validatePlayer, async (req, res) => {
+  /* #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: "#/definitions/Player" }
+      }
+    }
+  } */
   try {
     const db = await connectDB();
     const result = await db.collection('players').insertOne(req.body);
@@ -51,6 +59,14 @@ router.post('/', validatePlayer, async (req, res) => {
 
 // PUT update player
 router.put('/:id', validatePlayer, async (req, res) => {
+  /* #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: "#/definitions/Player" }
+      }
+    }
+  } */
   try {
     const db = await connectDB();
     const id = new ObjectId(req.params.id);

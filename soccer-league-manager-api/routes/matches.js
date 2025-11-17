@@ -39,6 +39,14 @@ router.get('/:id', async (req, res) => {
 
 // POST create match
 router.post('/', validateMatch, async (req, res) => {
+  /* #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: "#/definitions/Match" }
+      }
+    }
+  } */
   try {
     const db = await connectDB();
     const match = req.body;
@@ -96,6 +104,14 @@ router.post('/', validateMatch, async (req, res) => {
 
 // PUT update match (you may need to re-run discipline logic or handle deltas — here we just replace)
 router.put('/:id', validateMatch, async (req, res) => {
+  /* #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        schema: { $ref: "#/definitions/Match" }
+      }
+    }
+  } */
   try {
     const db = await connectDB();
     const id = new ObjectId(req.params.id);

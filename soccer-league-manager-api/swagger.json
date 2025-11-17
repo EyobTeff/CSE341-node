@@ -8,8 +8,8 @@
   "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "http",
-    "https"
+    "https",
+    "http"
   ],
   "paths": {
     "/players/": {
@@ -35,6 +35,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Player"
+              }
+            }
           }
         }
       }
@@ -85,6 +95,16 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -133,6 +153,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Match"
+              }
+            }
           }
         }
       }
@@ -183,6 +213,16 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Match"
+              }
+            }
+          }
         }
       },
       "delete": {
@@ -232,6 +272,16 @@
           "500": {
             "description": "Internal Server Error"
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Team"
+              }
+            }
+          }
         }
       }
     },
@@ -280,6 +330,16 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Team"
+              }
+            }
           }
         }
       },
