@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use('/auth', require('./routes/auth'));
 app.use('/players', require('./routes/players'));
 app.use('/matches', require('./routes/matches'));
 app.use('/teams', require('./routes/teams'));

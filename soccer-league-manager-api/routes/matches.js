@@ -10,6 +10,7 @@ const router = express.Router();
 const { ObjectId } = require('mongodb');
 const connectDB = require('../data/database');
 const { validateMatch } = require('../middleware/validate');
+const authenticateToken = require('../middleware/auth');
 
 // GET all matches
 router.get('/', async (req, res) => {
@@ -38,8 +39,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create match
-router.post('/', validateMatch, async (req, res) => {
-  /* #swagger.parameters['body'] = {
+router.post('/', authenticateToken, validateMatch, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }]
+     #swagger.parameters['body'] = {
     in: 'body',
     description: 'Match data',
     required: true,
@@ -101,8 +103,9 @@ router.post('/', validateMatch, async (req, res) => {
 });
 
 // PUT update match (you may need to re-run discipline logic or handle deltas — here we just replace)
-router.put('/:id', validateMatch, async (req, res) => {
-  /* #swagger.parameters['body'] = {
+router.put('/:id', authenticateToken, validateMatch, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }]
+     #swagger.parameters['body'] = {
     in: 'body',
     description: 'Match data',
     required: true,
@@ -121,7 +124,8 @@ router.put('/:id', validateMatch, async (req, res) => {
 });
 
 // DELETE match
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }] */
   try {
     const db = await connectDB();
     const id = new ObjectId(req.params.id);

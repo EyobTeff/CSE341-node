@@ -10,6 +10,7 @@ const router = express.Router();
 const { ObjectId } = require('mongodb');
 const connectDB = require('../data/database');
 const { validatePlayer } = require('../middleware/validate');
+const authenticateToken = require('../middleware/auth');
 
 // GET all players
 router.get('/', async (req, res) => {
@@ -38,8 +39,9 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create player
-router.post('/', validatePlayer, async (req, res) => {
-  /* #swagger.parameters['body'] = {
+router.post('/', authenticateToken, validatePlayer, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }]
+     #swagger.parameters['body'] = {
     in: 'body',
     description: 'Player data',
     required: true,
@@ -56,8 +58,9 @@ router.post('/', validatePlayer, async (req, res) => {
 });
 
 // PUT update player
-router.put('/:id', validatePlayer, async (req, res) => {
-  /* #swagger.parameters['body'] = {
+router.put('/:id', authenticateToken, validatePlayer, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }]
+     #swagger.parameters['body'] = {
     in: 'body',
     description: 'Player data',
     required: true,
@@ -76,7 +79,8 @@ router.put('/:id', validatePlayer, async (req, res) => {
 });
 
 // DELETE player
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', authenticateToken, async (req, res) => {
+  /* #swagger.security = [{ "bearerAuth": [] }] */
   try {
     const db = await connectDB();
     const id = new ObjectId(req.params.id);
