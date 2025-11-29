@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('../config/passport');
+const passport = require('passport');
+require('../config/passport'); // Initialize passport config
 
 // Google OAuth login route
 // #swagger.tags = ['Authentication']
 // #swagger.description = 'Redirect to Google for OAuth authentication'
-router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}));
+router.get('/google', 
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  })
+);
 
 // Google OAuth callback route
 // #swagger.tags = ['Authentication']
