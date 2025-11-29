@@ -3,18 +3,10 @@ const swaggerAutogen = require('swagger-autogen')();
 const doc = {
   info: {
     title: 'Soccer League Management API',
-    description: 'API for players and matches with discipline rules. Protected routes require Bearer token authentication.'
+    description: 'API for players and matches with discipline rules. Protected routes require Google OAuth authentication.'
   },
   host: process.env.SWAGGER_HOST || 'localhost:8080',
-  schemes: ['https', 'http'],
-  securityDefinitions: {
-    bearerAuth: {
-      type: 'apiKey',
-      name: 'Authorization',
-      in: 'header',
-      description: 'Enter your JWT token in the format: Bearer <token>'
-    }
-  },
+  schemes: ['http', 'https'],
   definitions: {
     Player: {
       name: 'Alex Abebe',

@@ -1,141 +1,80 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const connectDB = require('../data/database');
-const authenticateToken = require('../middleware/auth');
+const passport = require('../config/passport');
 
-// Register new user
-router.post('/register', async (req, res) => {
-  /* #swagger.parameters['body'] = {
-    in: 'body',
-    description: 'User registration data',
-    required: true,
-    schema: {
-      email: 'user@example.com',
-      password: 'yourPassword123',
-      name: 'John Doe'
-    }
-  } */
-  try {
-    const { email, password, name } = req.body;
+// Google OAuth login route
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Redirect to Google for OAuth authentication'
+router.get('/google', passport.authenticate('google', {
+  scope: ['profile', 'email']
+}));
 
-    // Validation
-    if (!email || !password || !name) {
-      return res.status(400).json({ message: 'Email, password, and name are required' });
-    }
-
-    const db = await connectDB();
-
-    // Check if user already exists
-    const existingUser = await db.collection('users').findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists with this email' });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create user
-    const newUser = {
-      email,
-      password: hashedPassword,
-      name,
-      createdAt: new Date()
-    };
-
-    const result = await db.collection('users').insertOne(newUser);
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: result.insertedId, email },
-      process.env.JWT_SECRET,
-      { expiresIn: '24h' }
-    );
-
-    res.status(201).json({
-      message: 'User registered successfully',
-      token,
-      user: { id: result.insertedId, email, name }
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error during registration' });
+// Google OAuth callback route
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Google OAuth callback - redirects after authentication'
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/login/failed' }),
+  (req, res) => {
+    // Successful authentication, redirect to success page
+    res.redirect('/auth/login/success');
   }
-});
+);
 
-// Login user
-router.post('/login', async (req, res) => {
-  /* #swagger.parameters['body'] = {
-    in: 'body',
-    description: 'User login credentials',
-    required: true,
-    schema: {
-      email: 'user@example.com',
-      password: 'yourPassword123'
-    }
-  } */
-  try {
-    const { email, password } = req.body;
-
-    // Validation
-    if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required' });
-    }
-
-    const db = await connectDB();
-
-    // Find user
-    const user = await db.collection('users').findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Check password
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: '24h' }
-    );
-
+// Login success route - returns user data
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Returns authenticated user data'
+router.get('/login/success', (req, res) => {
+  if (req.user) {
     res.status(200).json({
-      message: 'Login successful',
-      token,
-      user: { id: user._id, email: user.email, name: user.name }
+      success: true,
+      message: 'Successfully logged in',
+      user: {
+        id: req.user._id,
+        email: req.user.email,
+        name: req.user.name,
+        photo: req.user.photo
+      }
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error during login' });
+  } else {
+    res.status(401).json({ success: false, message: 'Not authenticated' });
   }
 });
 
-// Get current user info (protected route)
-router.get('/user', authenticateToken, async (req, res) => {
-  /* #swagger.security = [{
-    "bearerAuth": []
-  }] */
-  try {
-    const db = await connectDB();
-    const user = await db.collection('users').findOne(
-      { email: req.user.email },
-      { projection: { password: 0 } } // Don't return password
-    );
+// Login failed route
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Returns login failure message'
+router.get('/login/failed', (req, res) => {
+  res.status(401).json({
+    success: false,
+    message: 'Login failed'
+  });
+});
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+// Logout route
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Logs out the current user'
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error logging out' });
     }
+    res.status(200).json({ message: 'Successfully logged out' });
+  });
+});
 
-    res.status(200).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Server error' });
+// Get current user - protected route
+// #swagger.tags = ['Authentication']
+// #swagger.description = 'Returns current authenticated user'
+router.get('/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({
+      id: req.user._id,
+      email: req.user.email,
+      name: req.user.name,
+      photo: req.user.photo
+    });
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
   }
 });
 
